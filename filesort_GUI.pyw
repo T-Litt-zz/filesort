@@ -7,19 +7,19 @@ from tkinter import ttk, messagebox
 
 def filesort():
     if messagebox.askyesno(message=f"Are you sure you want to sort all the files in {path.get()}?",
-                           icon="question", title="File Sorter"):
-        parent_dir = str(path.get())
-        move_mode = int(mode.get())
-        if isdir(parent_dir):
-            files = (f for f in listdir(parent_dir) if isfile(join(parent_dir, f)))
+                           icon="question", title="File Sorter"):  # confirm user's input is correct with user
+        parent_dir = str(path.get())  # Get directory from input box
+        move_mode = int(mode.get())  # Get mode from the selection inputted
+        if isdir(parent_dir):  # Check directory exists
+            files = (f for f in listdir(parent_dir) if isfile(join(parent_dir, f)))  # Creates tuple of the files
             for file in files:
-                target_dir = join(parent_dir, file.split(".")[move_mode - 1])
+                target_dir = join(parent_dir, file.split(".")[move_mode - 1])  # gets name of target directory for move
                 if not exists(target_dir):
-                    mkdir(target_dir)
-                move(join(parent_dir, file), target_dir)
-            messagebox.showinfo("File Sorter", "Operation Complete!")
+                    mkdir(target_dir)  # create directory if it does not exist
+                move(join(parent_dir, file), target_dir)  # move file to new directory
+            messagebox.showinfo("File Sorter", "Operation Complete!")  # Alert for user that program ran successfully
         else:
-            messagebox.showerror("Error!", "Parent directory does not exist!")
+            messagebox.showerror("Error!", "Parent directory does not exist!")  # Alert for wrong directory
     else:
         pass
 
@@ -46,16 +46,18 @@ mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
+# input field for parent directory
 path = StringVar()
 path_entry = ttk.Entry(mainframe, width=12, textvariable=path)
 path_entry.grid(column=2, row=1, sticky=(W, E))
+ttk.Label(mainframe, text="Parent Directory: ").grid(column=1, row=1, sticky=W)
 
+# buttons for choosing sorting method (by name or format)
 mode = StringVar()
 ttk.Radiobutton(mainframe, text="Sort by Name", variable=mode, value=1).grid(column=2, row=2, sticky=(W, E))
 ttk.Radiobutton(mainframe, text="Sort by Format", variable=mode, value=2).grid(column=1, row=2, sticky=(W, E))
 
 ttk.Button(mainframe, text="Sort", command=filesort).grid(column=2, row=3, sticky=W)
-ttk.Label(mainframe, text="Parent Directory: ").grid(column=1, row=1, sticky=W)
 
 for child in mainframe.winfo_children():
     child.grid_configure(padx=5, pady=5)
