@@ -1,5 +1,5 @@
 # filesort
-This is a python script that sorts files into subdirectories either by their name or fileformat. Releases compiles the filesort_GUI.pyw file using pyinstaller. 
+This is a python script that sorts files into subdirectories either by their name or fileformat. Releases compiles the filesort.pyw file using pyinstaller. 
 
 # disclaimer
 Please be aware that this is not perfect so make sure to test it before using it on any important files.
